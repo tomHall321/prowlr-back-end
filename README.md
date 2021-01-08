@@ -1,11 +1,68 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Restful API: Prowlr
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+All requests should use the basename https://prowlr.developme.space/api and be sent using JSON and with the Accept: application/json header.
+
+### `GET /animals`
+
+Get all the animals in the database.
+
+Response: returns a list of player objects wrapped in a "data" object *e.g:*
+
+    {
+        "data": [
+            {
+                "id": 1,
+                "name": "Sid",
+                "age": 11,
+                "bio": "Looking for someone to take things slow with. Enjoy lazy mornings and hanging out.",
+                "species": "Sloth",
+                "image_url": "/assets/sloth.jpg"
+            }
+               ]   
+    }
+
+### `PATCH /animals/{id}/likes`
+
+Updates likes or dislikes:
+
+public function update(AnimalRequest $request, Animal $animal)
+    {
+        if($request->liked){
+            $animal->likes += 1;
+        }
+        else{
+            $animal->dislikes += 1;
+        };
+        $animal->save();
+
+        return response(null, 204);
+    } 
+
+
+### `GET animals/ranking`
+
+Gets data to be displayed and styled on leaderboard page of app
+
+
+*e.g.:*
+
+    [
+       {
+         "data": [
+            {
+                "id": 1,
+                "name": "Sid",
+                "age": 11,
+                "bio": "Looking for someone to take things slow with. Enjoy lazy mornings and hanging out.",
+                "species": "Sloth",
+                "image_url": "/assets/sloth.jpg",
+                "percentageOfLikes": 64
+            }
+          ]
+        }
+    ]
+    
+ 
 
 ## About Laravel
 
